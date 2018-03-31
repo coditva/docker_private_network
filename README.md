@@ -12,11 +12,12 @@ Build the server image from the `Dockerfile`:
 
 Start the server on the `localhost`:
 
-    sudo docker run --name "server" server
+    sudo docker run -d --name "server" server
 
-Create a network between docker containers:
+Create a network between docker containers and add server to the network
 
     sudo docker network create "my-network"
+    sudo docker network connect "my-network" server
 
 Build the client image from the `Dockerfile`:
 
@@ -38,4 +39,5 @@ sudo docker rm server        # remove the container
 sudo docker rm client        # remove the container
 sudo docker image rm server  # remove the image
 sudo docker image rm client  # remove the image
+sudo docker network rm my-network   # remove the network
 ```
