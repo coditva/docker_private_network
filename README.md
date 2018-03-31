@@ -6,6 +6,18 @@ This is an example of a private network on multiple machines which can only be a
 - A client docker file to create clients to connect to the Apache server.
 
 ## How to
+
+#### Use the script to do everything for you:
+
+```bash
+./execute server  # create and run server
+./execute client  # create and run client
+./execute clean   # remove server and client containers
+./execute distclean  # remove server and client images and docker network
+```
+
+#### Or, execute individual commands as follows
+
 Build the server image from the `Dockerfile`:
 
     sudo docker build --tag "server" server
