@@ -2,8 +2,9 @@
 This is an example of a private network on multiple machines which can only be accessed inside a docker container.
 
 ## What is what
-- A server docker file to create an Apache HTTP server on the local network.
-- A client docker file to create clients to connect to the Apache server.
+- `server/Dockerfile` - create an Apache HTTP server on the local network.
+- `client/Dockerfile` - create clients to connect to the Apache server.
+- `server/public-html/*` - html pages to be served
 
 ## How to
 
