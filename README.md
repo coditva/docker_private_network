@@ -19,18 +19,28 @@ This is an example of a private network on multiple machines which can only be a
 
 #### Or, execute individual commands as follows
 
-Build the server image from the `Dockerfile`:
+On the server machine host, initialize the cluster:
+
+    sudo docker swarm init --advertise-addr 192.168.99.101
+    # you can choose any other IP address if you like
+
+On the remote client host, join the swarm:
+
+    sudo docker swarm join --token <token> 192.168.99.101:2377
+    # token is the one you recieved from swarm init
+    # change IP if you chose your own IP in swarm init
+
+Create an `overlay` network for the swarm on the *server host*:
+
+    sudo docker network create --driver overlay --attachable my-network
+
+Build the server image from the `Dockerfile` on the server host:
 
     sudo docker build --tag "server" server
 
 Start the server on the `localhost`:
 
-    sudo docker run -d --name "server" server
-
-Create a network between docker containers and add server to the network
-
-    sudo docker network create "my-network"
-    sudo docker network connect "my-network" server
+    sudo docker run -d --name "server" --network my-network server
 
 Build the client image from the `Dockerfile`:
 
@@ -39,6 +49,7 @@ Build the client image from the `Dockerfile`:
 Start the client with and get tty access:
 
     sudo docker run -it --network my-network --name client client
+    # if you're using docker-machine for VM, use option "-d"
 
 Test that you can connect to the server:
 

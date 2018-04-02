@@ -7,7 +7,7 @@ if [[ $1 == "server" ]]; then
 
     if [[ "$( sudo docker network ls | grep $mynetwork )" == "" ]]; then
         # create network
-        sudo docker network create "$mynetwork"
+        sudo docker network create --driver overlay --attachable "$mynetwork"
     fi
 
     if [[ "$(sudo docker ps -a | grep server)" == "" ]]; then
@@ -16,10 +16,7 @@ if [[ $1 == "server" ]]; then
         sudo docker build --tag "server" server
 
         # create and run server container
-        sudo docker run -d --name "server" server
-
-        # add server to the network
-        sudo docker network connect "$mynetwork" server
+        sudo docker run -d --network $mynetwork --name "server" server
     fi
 
 elif [[ $1 == "client" ]]; then
