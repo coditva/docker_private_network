@@ -76,11 +76,8 @@ Copy the script, Dockerfiles and web-pages into the virtual machines:
     docker-machine scp -r . host0:/home/docker
     docker-machine scp -r client execute.sh host1:/home/docker
 
-*Follow the steps in
-[How to](https://github.com/UtkarshMe/docker_private_network#how-to)
-to create a cluster and create/run docker containers.*
-
-Remember to change all commands like:
+**Follow the steps in [How to](#how-to) to create a cluster and create/run
+docker containers.** Remember to change all commands like:
 
     sudo docker build --tag server server
 
@@ -91,9 +88,9 @@ To:
 
 ## Cleanup
 
-    sudo docker stop server      # stop the container
-    sudo docker rm server        # remove the container
-    sudo docker rm client        # remove the container
+    sudo docker rm -f server     # remove the container
+    sudo docker rm -f client     # remove the container
     sudo docker image rm server  # remove the image
     sudo docker image rm client  # remove the image
     sudo docker network rm my-network   # remove the network
+
