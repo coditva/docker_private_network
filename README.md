@@ -8,16 +8,7 @@ This is an example of a private network on multiple machines which can only be a
 
 ## How to
 
-#### Use the script to do everything for you:
-
-```bash
-./execute server  # create and run server
-./execute client  # create and run client
-./execute clean   # remove server and client containers
-./execute distclean  # remove server and client images and docker network
-```
-
-#### Or, execute individual commands as follows
+### Create a swarm and add an overlay network
 
 On the server machine host, initialize the cluster:
 
@@ -33,6 +24,20 @@ On the remote client host, join the swarm:
 Create an `overlay` network for the swarm on the *server host*:
 
     sudo docker network create --driver overlay --attachable my-network
+
+
+### Create and run server and clients:
+
+#### Use the script to do everything for you:
+
+```bash
+./execute server  # create and run server
+./execute client  # create and run client
+./execute clean   # remove server and client containers
+./execute distclean  # remove server and client images and docker network
+```
+
+#### Or, execute individual commands as follows
 
 Build the server image from the `Dockerfile` on the server host:
 
