@@ -30,12 +30,10 @@ Create an `overlay` network for the swarm on the *server host*:
 
 #### Use the script to do everything for you:
 
-```bash
-./execute server  # create and run server
-./execute client  # create and run client
-./execute clean   # remove server and client containers
-./execute distclean  # remove server and client images and docker network
-```
+    sudo ./execute server  # create and run server
+    sudo ./execute client  # create and run client
+    sudo ./execute clean   # remove server and client containers
+    sudo ./execute distclean  # remove docker images
 
 #### Or, execute individual commands as follows
 
@@ -61,12 +59,41 @@ Test that you can connect to the server:
     wget server
 
 
+## If you want to test this on a single host, use `docker-machine`:
+
+Create two host machines. We will use `host0` for server and `host1` for client:
+
+    docker-machine create --driver virtualbox host0
+    docker-machine create --driver virtualbox host1
+
+To execute any command in the virtual machines, use this command:
+
+    docker-machine ssh <machine_name> <command>
+    # e.g. docker-machine ssh host1 "wget server"
+
+Copy the script, Dockerfiles and web-pages into the virtual machines:
+
+    docker-machine scp -r . host0:/home/docker
+    docker-machine scp -r client execute.sh host1:/home/docker
+
+*Follow the steps in
+[How to](https://github.com/UtkarshMe/docker_private_network#how-to)
+to create a cluster and create/run docker containers.*
+
+Remember to change all commands like:
+
+    sudo docker build --tag server server
+
+To:
+
+    docker-machine ssh host0 "docker build --tag server server"
+
+
 ## Cleanup
-```bash
-sudo docker stop server      # stop the container
-sudo docker rm server        # remove the container
-sudo docker rm client        # remove the container
-sudo docker image rm server  # remove the image
-sudo docker image rm client  # remove the image
-sudo docker network rm my-network   # remove the network
-```
+
+    sudo docker stop server      # stop the container
+    sudo docker rm server        # remove the container
+    sudo docker rm client        # remove the container
+    sudo docker image rm server  # remove the image
+    sudo docker image rm client  # remove the image
+    sudo docker network rm my-network   # remove the network
