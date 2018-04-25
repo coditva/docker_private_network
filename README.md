@@ -94,3 +94,5 @@ To:
     sudo docker image rm client  # remove the image
     sudo docker network rm my-network   # remove the network
 
+## License
+MIT &copy; Utkarsh Maheshwari
